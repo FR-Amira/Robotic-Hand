@@ -3,18 +3,34 @@
 
 // Flex Sensor(fih resistance variable: non polarise) capteur actif 
 #include<Servo.h>
-Servo Sg90;
-int ValFlex;
+Servo Sg90_1,Sg90_2;
+int ValFlex1,ValFlex2;
+
 
 void setup() {
-  Sg90.attach(5);
+  Sg90_1.attach(5);
   Serial.begin(9600);
+
+  Sg90_2.attach(3);
 
 }
 
 void loop() {
-  ValFlex = analogRead(A0);
- Serial.println(ValFlex);
- int PwmSp90=map(ValFlex,0,1023,0,180); //0 409/180 113
-     Sg90.write(PwmSp90);
+
+  //Flex 1
+  ValFlex1 = analogRead(A0);
+
+ int Pwm5Sp90=map(ValFlex1,113,409,0,180); //0 409/180 113
+     Pwm5Sp90=constrain(Pwm5Sp90,0,180);
+     Sg90_1.write(Pwm5Sp90);
+      Serial.println(Pwm5Sp90);
+     delay(50);
+// Flex 2
+       ValFlex2 = analogRead(A5);
+
+ int Pwm3Sp90=map(ValFlex2,113,409,0,180); 
+     Pwm3Sp90=constrain(Pwm3Sp90,0,180);
+     Sg90_2.write(Pwm3Sp90);
+      Serial.println(Pwm3Sp90);
+      delay(50);
 }
